@@ -1,9 +1,11 @@
-package com.example.todo;
+package com.example.todo.UI.activities;
 
 import android.os.Bundle;
 
+import com.example.todo.R;
+import com.example.todo.UI.fragments.FormToDo;
+import com.example.todo.UI.fragments.MyNote;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -21,6 +23,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if (savedInstanceState != null){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.main_container, new MyNote())
+                    .commit();
+        }
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

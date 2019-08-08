@@ -1,4 +1,4 @@
-package com.example.todo;
+package com.example.todo.UI.fragments;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.example.todo.R;
 
 public class FormToDo extends DialogFragment {
     public static final String TAG = "Nuevo pedido";
