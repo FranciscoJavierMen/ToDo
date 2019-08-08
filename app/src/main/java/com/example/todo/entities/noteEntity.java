@@ -8,10 +8,11 @@ import androidx.room.TypeConverters;
 
 import com.example.todo.utils.dateConverter;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity(tableName = "note_table")
-public class noteEntity {
+public class noteEntity implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;

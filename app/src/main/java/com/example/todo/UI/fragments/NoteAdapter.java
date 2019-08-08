@@ -7,23 +7,26 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo.entities.noteEntity;
 import com.example.todo.R;
+import com.example.todo.utils.NoteDiffUtil;
+
+import java.util.List;
 
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> implements RealmChangeListener {
 
-    private final RealmResults<noteEntity> mNoteEntities;
+    private List<noteEntity> mNoteEntities;
     private Context context;
 
-    public NoteAdapter(RealmResults<noteEntity> mNoteEntities, Context context) {
+    public NoteAdapter(List<noteEntity> mNoteEntities, Context context) {
         this.mNoteEntities = mNoteEntities;
         this.context = context;
-        mNoteEntities.addChangeListener(this);
     }
 
 
@@ -41,12 +44,26 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> im
         holder.note.setText(mNoteEntities.get(position).getDescription());
     }
 
+    public void addNotes(List<noteEntity> newNotes) {
+        mNoteEntities = newNotes;
+        NoteDiffUtil noteDiffUtil = new NoteDiffUtil(mNoteEntities, newNotes);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(noteDiffUtil);
+        mNoteEntities.clear();
+        mNoteEntities.addAll(newNotes);
+        diffResult.dispatchUpdatesTo(this);
+    }
+
+
     @Override
     public int getItemCount() {
         if (mNoteEntities != null){
             return mNoteEntities.size();
         }
         return 0;
+    }
+
+    public noteEntity getItem(int position) {
+        return mNoteEntities.get(position);
     }
 
     @Override

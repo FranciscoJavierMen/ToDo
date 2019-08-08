@@ -1,5 +1,6 @@
 package com.example.todo.UI.activities;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.todo.R;
@@ -9,13 +10,18 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MyNote.OnFragmentInteractionListener{
+
+
+    private MyNote myNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +30,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (savedInstanceState != null){
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.main_container, new MyNote())
-                    .commit();
-        }
+        myNote = new MyNote();
+
+        setFragment(myNote);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -39,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Crear nueva tarea", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    //Método para establecer el fragment seleccionado dentro del FrameLayout
+    private void setFragment(Fragment fragment){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_container, fragment);
+        fragmentTransaction.commit();
+
     }
 
     private void openForm() {
@@ -65,5 +76,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
