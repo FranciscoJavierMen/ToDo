@@ -10,16 +10,18 @@ import androidx.room.Update;
 
 import com.example.todo.entities.noteEntity;
 
+import java.util.List;
+
 
 @Dao
 public interface noteDao {
     //Selecciona todas las notas
     @Query("SELECT * FROM note_table ORDER BY created_at ASC")
-    LiveData<noteEntity> getAllNotes();
+    LiveData<List<noteEntity>> getAllNotes();
 
     //Selecciona una nota en específico
     @Query("SELECT * FROM note_table WHERE id=:noteId")
-    LiveData<noteEntity> getNote(int noteId);
+    LiveData<List<noteEntity>> getNote(int noteId);
 
     //Inserta una nueva nota
     @Insert

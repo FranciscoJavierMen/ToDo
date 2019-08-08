@@ -1,5 +1,6 @@
 package com.example.todo.entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -15,6 +16,7 @@ import java.util.Date;
 public class noteEntity implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
+    @NonNull
     private int id;
 
     @ColumnInfo(name = "title")
